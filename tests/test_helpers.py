@@ -1,4 +1,4 @@
-from .helpers import (
+from eddy.helpers import (
     load_rng,
     load_index,
     load_vectors,

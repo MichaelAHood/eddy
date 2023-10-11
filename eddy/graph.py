@@ -7,8 +7,20 @@ def build_threshold_graph(
     vectors: np.array, index: IndexFlatIP, k: int, threshold: float
 ) -> nx.Graph:
     """Construct a threshold graph."""
+    n_vectors = len(vectors)
     distances, indices = index.search(vectors, k)
-    print(distances, indices)
+    A = build_adjacency_matrix(distances, indices, threshold)
+
+    G = nx.Graph()
+    G.add_nodes_from(range(n_vectors))
+
+    for i in range(n_vectors):
+        for j in range(i + 1, n_vectors):
+            distance = A[i, j]
+            if distance > 0:
+                G.add_edge(i, j, weight=distance)
+
+    return G
 
 
 def build_adjacency_matrix(

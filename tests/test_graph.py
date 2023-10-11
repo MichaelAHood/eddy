@@ -1,7 +1,7 @@
 import numpy as np
 import faiss
 from eddy.graph import build_adjacency_matrix
-from .helpers import load_vectors_and_index
+from eddy.helpers import load_vectors_and_index
 
 
 def test_build_graph():
@@ -29,3 +29,5 @@ def test_build_adjacency_matrix() -> None:
         dtype=np.float32,
     )
     assert A is not None
+    assert A.shape == (n_vectors, n_vectors)
+    assert all(np.isclose(A.round(1), got).flatten())
